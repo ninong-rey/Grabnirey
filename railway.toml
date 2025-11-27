@@ -8,3 +8,4 @@ PHP_VERSION = "8.3"
 startCommand = "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"
 
 [environments.staging]
+# Railway configuration for PHP 8.3
