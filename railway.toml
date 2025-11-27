@@ -4,8 +4,11 @@ builder = "nixpacks"
 [build.args]
 PHP_VERSION = "8.3"
 
+[build.buildCommand]
+composer = "composer install --no-dev --optimize-autoloader --no-interaction"
+node = "npm install && npm run build"
+
 [deploy]
 startCommand = "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"
 
 [environments.staging]
-# Railway configuration for PHP 8.3
