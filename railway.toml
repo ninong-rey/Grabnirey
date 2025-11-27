@@ -1,0 +1,10 @@
+[build]
+builder = "nixpacks"
+
+[build.args]
+PHP_VERSION = "8.3"
+
+[deploy]
+startCommand = "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"
+
+[environments.staging]
