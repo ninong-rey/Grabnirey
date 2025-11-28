@@ -6,6 +6,7 @@ buildCommand = "composer install --no-dev --optimize-autoloader --no-interaction
 PHP_VERSION = "8.3"
 
 [deploy]
-startCommand = "php artisan config:clear && php artisan cache:clear && php artisan view:clear && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8080"
+preDeployCommand = "php -r \"file_put_contents('.env', 'APP_KEY=base64:' . base64_encode(random_bytes(32)));\""
+startCommand = "php artisan config:clear && php artisan cache:clear && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8080"
 
 [environments.staging]
