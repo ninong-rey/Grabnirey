@@ -1,11 +1,11 @@
 [build]
 builder = "nixpacks"
-buildCommand = "php -r \"file_put_contents('.env', 'APP_KEY=base64:' . base64_encode(random_bytes(32)));\" && composer install --no-dev --optimize-autoloader --no-interaction && npm install && npm run build"
+buildCommand = "composer install --no-dev --optimize-autoloader --no-interaction && npm install && npm run build"
 
 [build.args]
 PHP_VERSION = "8.3"
 
 [deploy]
-startCommand = "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8080"
+startCommand = "php -d display_errors=on -d error_reporting=E_ALL artisan serve --host=0.0.0.0 --port=8080"
 
 [environments.staging]
