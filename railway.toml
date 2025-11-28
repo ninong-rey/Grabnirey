@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "composer install --no-dev --optimize-autoloader --no-interaction && npm install && npm run build"
+buildCommand = "php -r \"file_put_contents('.env', 'APP_KEY=base64:' . base64_encode(random_bytes(32)));\" && composer install --no-dev --optimize-autoloader --no-interaction && npm install && npm run build"
 
 [build.args]
 PHP_VERSION = "8.3"
