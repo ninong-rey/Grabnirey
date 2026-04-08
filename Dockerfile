@@ -21,6 +21,10 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN chmod -R 777 /var/www/html/storage
 RUN chmod -R 777 /var/www/html/bootstrap/cache
 
+# CRITICAL FIX: Configure PHP-FPM to listen on port 9000
+RUN sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /usr/local/etc/php-fpm.d/www.conf || true
+RUN sed -i 's/;listen.allowed_clients = 127.0.0.1/listen.allowed_clients = 127.0.0.1/g' /usr/local/etc/php-fpm.d/www.conf || true
+
 EXPOSE 80
 
 CMD ["/start.sh"]
