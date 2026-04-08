@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "composer install --no-dev --optimize-autoloader --no-interaction && npm install && npm run build"
+buildCommand = "php artisan config:clear && php artisan cache:clear && composer install --no-dev --optimize-autoloader --no-interaction && npm install && npm run build"
 
 [build.args]
 PHP_VERSION = "8.3"
