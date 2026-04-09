@@ -16,11 +16,9 @@ ENV REAL_IP_HEADER 1
 ENV APP_ENV production
 ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
-
-# Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# Set storage permissions
+# Set permissions
 RUN chmod -R 777 /var/www/html/storage
 RUN chmod -R 777 /var/www/html/bootstrap/cache
 
@@ -28,19 +26,12 @@ RUN chmod -R 777 /var/www/html/bootstrap/cache
 RUN echo "listen = 127.0.0.1:9000" > /usr/local/etc/php-fpm.d/zz-docker.conf
 RUN echo "listen.allowed_clients = 127.0.0.1" >> /usr/local/etc/php-fpm.d/zz-docker.conf
 
-# Create custom startup script with delay
+# Override the start script
 RUN echo '#!/bin/sh\n\
-echo "Starting PHP-FPM..."\n\
 php-fpm -D\n\
-echo "Waiting for PHP-FPM to be ready..."\n\
-sleep 5\n\
-echo "Testing PHP-FPM connection..."\n\
-nc -z 127.0.0.1 9000 || echo "PHP-FPM not ready yet"\n\
-echo "Starting Nginx..."\n\
-nginx -g "daemon off;"' > /custom-start.sh
-
-RUN chmod +x /custom-start.sh
+sleep 3\n\
+nginx -g "daemon off;"' > /start-custom.sh && chmod +x /start-custom.sh
 
 EXPOSE 80
 
-CMD ["/custom-start.sh"]
+CMD ["/start-custom.sh"]
