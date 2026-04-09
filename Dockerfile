@@ -15,10 +15,9 @@ ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# Set permissions
+# Permissions
 RUN chmod -R 777 /var/www/html/storage
 RUN chmod -R 777 /var/www/html/bootstrap/cache
+RUN chmod -R 777 /var/www/html/database
 
 EXPOSE 80
-
-# The base image already has a CMD - we don't need to override it
