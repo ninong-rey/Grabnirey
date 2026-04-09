@@ -2,9 +2,6 @@ FROM richarvey/nginx-php-fpm:3.1.6
 
 COPY . .
 
-# Install Node.js and npm
-RUN apk add --no-cache nodejs npm
-
 # Image config
 ENV SKIP_COMPOSER 1
 ENV WEBROOT /var/www/html/public
@@ -22,16 +19,6 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN chmod -R 777 /var/www/html/storage
 RUN chmod -R 777 /var/www/html/bootstrap/cache
 
-# Configure PHP-FPM to listen on port 9000
-RUN echo "listen = 127.0.0.1:9000" > /usr/local/etc/php-fpm.d/zz-docker.conf
-RUN echo "listen.allowed_clients = 127.0.0.1" >> /usr/local/etc/php-fpm.d/zz-docker.conf
-
-# Override the start script
-RUN echo '#!/bin/sh\n\
-php-fpm -D\n\
-sleep 3\n\
-nginx -g "daemon off;"' > /start-custom.sh && chmod +x /start-custom.sh
-
 EXPOSE 80
 
-CMD ["/start-custom.sh"]
+# The base image already has a CMD - we don't need to override it
